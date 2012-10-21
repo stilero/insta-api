@@ -23,7 +23,6 @@ class InstaEndpoint{
     public function __construct($accessToken, $params = array()) {
         $this->accessToken = $accessToken;
         $this->params = $params;
-        $this->params['access_token'] = $accessToken;
     }
     
     public function query(){
