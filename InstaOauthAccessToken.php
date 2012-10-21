@@ -36,7 +36,11 @@ class InstaOauthAccessToken extends InstaOAuth{
         );
         return $vars;
     }
-    
+    /**
+     * Extracts a token from the Json response
+     * @param string $jsonResponse JSON encoded response from instagram
+     * @return string An access token, false on fail
+     */
     private function getTokenFromJsonResponse($jsonResponse){
         $response = json_decode($jsonResponse);
         if(isset($response->access_token)){
@@ -44,7 +48,10 @@ class InstaOauthAccessToken extends InstaOAuth{
         }
         return false;
     }
-    
+    /**
+     * Requests an access token from Instagram
+     * @return string   A valid access token
+     */
     public function requestAccessToken(){
         $url = parent::$_instagramOAuthUrl . self::$_instaTokenUrlPath;
         $Communicator = new Communicator($url, $this->getPostVars());

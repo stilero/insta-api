@@ -23,25 +23,33 @@ class InstaOauthAccessCode extends InstaOAuth{
     public function __construct($InstaClient, $redirectUri) {
         parent::__construct($InstaClient, $redirectUri);
     }
-    
+    /**
+     * Builds and returns a authorization URL
+     * @return string The authorization URL
+     */
     protected function getAuthorizationUrl(){
         $href = parent::$_instagramOAuthUrl.self::$_instaCodeUrlPath;
         $vars = array(
             'client_id' => $this->InstaClient->id,
             'redirect_uri' => $this->_redirectUri,
             'response_type' => self::RESPONSE_TYPE_PARAM,
-            'scope' => InstaScope::COMMENTS.' '.InstaScope::LIKES.' '.InstaScope::RELATIONSHIPS
+            'scope' => InstaScope::full()
         );
         $query = http_build_query($vars);
          $url = $href.'?'.$query;
          return $url;
     }
-    
+    /**
+     * Redirects the user to the Instagram Authorization page
+     */
     public function openAuthorizationUrl(){
         header('Location: '.$this->getAuthorizationUrl());
         exit(1);
     }
-    
+    /**
+     * Retrieves the access code from a GET response
+     * @return string An access code from Instagram
+     */
     public function getCodeFromRequest(){
         $this->code = $_GET[self::RESPONSE_TYPE_PARAM];
         return $this->code;

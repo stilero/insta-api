@@ -32,11 +32,9 @@ class InstaScope{
      * likes - to like and unlike items on a user’s behalf
      */
     const LIKES = 'likes';
-    private static $prefix = 'scope=';
-    
+
     public static function full(){
-        $scope = self::$prefix.
-            self::BASIC.' '.
+        $scope = self::BASIC.' '.
             self::COMMENTS.' '.
             self::LIKES.' '.
             self::RELATIONSHIPS;
@@ -44,23 +42,20 @@ class InstaScope{
     }
     
     public static function likesComments(){
-        $scope = self::$prefix.
-            self::BASIC.' '.
+        $scope = self::BASIC.' '.
             self::COMMENTS.' '.
             self::LIKES;
         return $scope;
     }
     
     public static function likes(){
-        $scope = self::$prefix.
-            self::BASIC.' '.
+        $scope = self::BASIC.' '.
             self::LIKES;
         return $scope;
     }
     
     public static function comments(){
-        $scope = self::$prefix.
-            self::BASIC.' '.
+        $scope = self::BASIC.' '.
             self::COMMENTS.' ';
         return $scope;
     }

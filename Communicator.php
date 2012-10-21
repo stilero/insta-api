@@ -43,6 +43,8 @@ class Communicator {
     private $_response;
     private $_responseInfoParts;
     private $_cookieFile;
+    private $_isCustomRequest = false;
+    private $_customRequestType;
     const HTTP_STATUS_OK = '200';
 
     function __construct($url="", $postVars="", $config="") {
@@ -88,6 +90,7 @@ class Communicator {
     
     private function _setupCurl(){
         $this->_initCurlSettings();
+        $this->_initCurlCustomRequest();
         $this->_initCurlPostMode();
         $this->_initCurlHeader();
         $this->_initCurlProxyPassword();
@@ -111,6 +114,11 @@ class Communicator {
                 CURLINFO_HEADER_OUT     =>  $this->_config['curlHeaderOut']
             )
         );
+    }
+    private function _initCurlCustomRequest(){
+        if($this->_isCustomRequest){
+            curl_setopt($this->_curlHandler, CURLOPT_CUSTOMREQUEST, $this->_customRequestType);
+        }
     }
     
     private function _initCurlPostMode(){
@@ -182,6 +190,11 @@ class Communicator {
     
     public function setHeader($header){
         $this->_header = $header;
+    }
+    
+    public function setCustomRequest($type){
+        $this->_isCustomRequest = true;
+        $this->_customRequestType = $type;
     }
     
     public function setPostVars($postVars){
